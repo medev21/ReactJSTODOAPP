@@ -45,13 +45,21 @@ var TodoPosts = React.createClass({
   render: function(){
     return (
       <ul className="list-group">
-        <li>one</li>
-        <li>one</li>
-        
+        {
+          this.props.posts.map(post => {
+            //post={post} this build the post object
+            //key = {post.id} this build a key from the post.id
+            return <li className="list-group-item" post={post} key={post.id}> {post.name} </li>
+
+            //can't do this, must be in one line like above when returning!  
+            // <li className="list-group-item" post={post} key={post.id}>
+            //   {post.name}
+            // </li>
+          })
+        }
       </ul>
     )
   }
 });
-
 
 ReactDOM.render(<App />, document.getElementById('app'));
