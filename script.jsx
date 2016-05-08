@@ -27,9 +27,24 @@ var App = React.createClass({
     return (
       <div>
         <PostForm addPost={this.handleAddPost}/>
-        <PostList posts={this.state.posts}/>
+        <PostList posts={this.state.posts} destroyPost={this.handleDestroyPost}/>
       </div>
     )
+  },
+
+  handleDestroyPost: function(post){
+    // console.log(post);
+    var statePosts = this.state.posts;
+
+    for(var i=0; i < statePosts.length; i++){
+      //if state post id is equal from the clicked post
+      if(statePosts[i].id == post.id){
+        statePosts.splice(i, 1); //remove the post from state
+      }
+    }
+
+    //after splicing, the state posts is gone so need to put it back again
+    this.setState({posts: statePosts}); //don't forget to reset it
   },
 
   handleAddPost: function(text){
@@ -88,7 +103,10 @@ var PostList = React.createClass({
           this.props.posts.map(post => {
             //post={post} this build the post object
             //key = {post.id} this build a key from the post.id
-            return <li className="list-group-item" post={post} key={post.id}> {post.name} </li>
+            return <li className="list-group-item" post={post} key={post.id}> {post.name}
+            <a onClick={this.deletePost.bind(this, post)} className="btn btn-danger" style={{float: "right"}}>X</a></li>
+
+            //the purpose of bind is to send the post objec from the state
 
             //can't do this, must be in one line like above when returning!
             // <li className="list-group-item" post={post} key={post.id}>
@@ -98,6 +116,13 @@ var PostList = React.createClass({
         }
       </ul>
     )
+  },
+
+  deletePost: function(post){
+    // console.log(post);
+
+    // send post to App
+    this.props.destroyPost(post);
   }
 });
 
