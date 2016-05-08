@@ -1,10 +1,33 @@
 var App = React.createClass({
+
+  getInitialState: function(){
+    return {
+      text: '',
+      posts: [
+        {
+          id: 1,
+          name: "meeting at work"
+        },
+
+        {
+          id: 2,
+          name: "attend conference"
+        },
+
+        {
+          id: 3,
+          name: "visit parents"
+        }
+      ]
+    }
+  },
+
   render: function(){
     //call TodoForm and TodoPosts
     return (
       <div>
         <TodoForm />
-        <TodoPosts />
+        <TodoPosts posts={this.state.posts}/>
       </div>
     )
   }
@@ -21,7 +44,11 @@ var TodoForm = React.createClass({
 var TodoPosts = React.createClass({
   render: function(){
     return (
-      <div>Todo posts</div>
+      <ul className="list-group">
+        <li>one</li>
+        <li>one</li>
+        
+      </ul>
     )
   }
 });
